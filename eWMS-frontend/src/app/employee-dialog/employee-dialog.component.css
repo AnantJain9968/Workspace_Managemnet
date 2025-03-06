@@ -1,0 +1,15 @@
+/* employee-dialog.component.css */
+.employee-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .employee-info p {
+    margin: 0;
+  }
+  
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
