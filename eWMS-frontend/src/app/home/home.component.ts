@@ -63,8 +63,8 @@ export class HomeComponent implements OnInit {
     
   }
 
-  navigateToBuilding(site: string): void {
-    this.router.navigate(['/building', site]);
+  navigateToBuilding(siteId: number): void {
+    this.router.navigate(['/building', siteId]);
   }
 
   filterOffices(): void {

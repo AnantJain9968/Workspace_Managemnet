@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'building/:site', component: BuildingComponent },
+  { path: 'building/:siteId', component: BuildingComponent },
   { path: 'employeeTracker/:site',component: EmployeeTrackerComponent},
   { path: 'floor/:building', component: FloorComponent },
   { path: 'floor-map/:floor', component: FloorMapComponent }
