@@ -1,19 +1,28 @@
 package com.st.workspace.management.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import javax.persistence.*;
+import lombok.NoArgsConstructor;
 
-@Data
+import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name = "spam_building")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int buildingId;
+    private Long buildingId;
 
-    private String buildingName;
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name = "site_id", nullable = false)
+    @JoinColumn(name = "site_id")
     private Site site;
+
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Floor> floors;
 }
