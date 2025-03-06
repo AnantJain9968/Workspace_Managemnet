@@ -28,9 +28,11 @@ public class Employee {
     @JoinColumn(name = "sub_department_id")
     private SubDepartment subDepartment;
 
-    @ManyToOne
-    @JoinColumn(name = "job_grade_id")
-    private JobGrade jobGrade;
+//    @ManyToOne
+//    @JoinColumn(name = "job_grade_id")
+//    private JobGrade jobGrade;
+    
+    private String jobGrade;
 
     @ManyToOne
     @JoinColumn(name = "seat_id")

@@ -26,24 +26,25 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    width: 18%; /* Adjusted width to fit 5-6 cubicles per row */
+    width: 170px; /* Adjusted width to fit 5-6 cubicles per row */
     margin: 5px; /* Reduced margin */
   }
   
-  .cubicle.t0 {
-    background-color: #D3D3D3; /* Light Gray for T0 */
+  .cubicle-t0 {
+    background-color: #d3d3d3; /* Light Gray for T0 */
   }
   
-  .cubicle.t1 {
+  .cubicle-t1 {
     background-color: #ADD8E6; /* Light Blue for T1 */
   }
   
-  .cubicle.t2 {
+  .cubicle-t2 {
     background-color: #FFFFE0; /* Light Yellow for T2 */
   }
   
-  .cubicle.t4 {
+  .cubicle-t4 {
     background-color: #E6E6FA; /* Light Purple for T4 */
+    
   }
   
   .cubicle h4 {
@@ -56,24 +57,22 @@
   
   .seats-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    flex-wrap: wrap;
   }
   
   .seat {
-    width: 20px; /* Adjusted size */
-    height: 20px; /* Adjusted size */
-    margin: 1px; /* Reduced margin */
-    background-color: white;
-    border-radius: 4px;
+    position: relative;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 50px;
+    height: auto;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    color: black;
+    justify-content: center;
   }
   
+    
   .seat.reserved {
     background-color: red; /* Red for reserved */
   }
