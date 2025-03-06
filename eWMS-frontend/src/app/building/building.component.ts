@@ -2,23 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet,RouterModule } from '@angular/router';
+import { SiteSidebarComponent } from '../site-sidebar/site-sidebar.component';
+import { ViewBuildingComponent } from '../view-building/view-building.component';
 
 @Component({
   selector: 'app-building',
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule,SiteSidebarComponent,ViewBuildingComponent,RouterOutlet,RouterModule],
   standalone: true,
   templateUrl: './building.component.html',
   styleUrl: './building.component.css'
 })
 export class BuildingComponent implements OnInit {
 
-  site: string | null = null;
-  buildings = [
-    { name: 'Building 1', image: 'assets/building1.jpg' },
-    { name: 'Building 2', image: 'assets/building2.jpg' },
-    { name: 'Building 3', image: 'assets/building3.jpg' },
-    { name: 'Building 4', image: 'assets/building4.jpg' }
-  ];
+  site: string | null =null;
+  
 
   constructor(private route: ActivatedRoute, private router: Router) { }
 
