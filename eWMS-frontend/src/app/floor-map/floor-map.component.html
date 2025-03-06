@@ -1,33 +1,23 @@
 <div class="floor-map-container">
-    <h2>{{ floor }} Layout</h2>
-    <div *ngFor="let row of rows" class="row-container">
-      <h3>{{ row.id }}</h3>
-      <div class="cubicle-container">
-        <ng-container [ngSwitch]="row.seats[0]?.type">
-          <div *ngSwitchCase="'T0'" class="cubicle t0">
-            <div class="seats-container">
-              <div class="seat" [ngClass]="{'reserved': row.seats[0]?.status === 'Reserved', 'unreserved': row.seats[0]?.status === 'Unreserved'}" matTooltip="{{ row.seats[0]?.id }}: {{ row.seats[0]?.status }}"></div>
-            </div>
+  <h2>{{ floor }} Layout</h2>
+  <div *ngFor="let row of rows" class="row-container">
+    <h3>{{ row.id }}</h3>
+    <div class="cubicle-container">
+      <div *ngFor="let cubicle of row.cubicles" class="cubicle" 
+      [ngClass]=
+      "{'cubicle-t4': cubicle.seats.length === 4,
+       'cubicle-t2': cubicle.seats.length === 2,
+        'cubicle-t1': cubicle.seats.length === 1 && cubicle.seats[0].type==='T1',
+        'cubicle-t0':cubicle.seats.length === 1 && cubicle.seats[0].type==='T0'}">
+        <h4>Cubicle {{ cubicle.cublicleId }}</h4>
+        <div class="seats-container">
+          <div *ngFor="let seat of cubicle.seats" 
+               class="seat" 
+               [ngClass]="{'reserved': seat.status === 'Reserved', 'unreserved': seat.status === 'Unreserved'}" 
+               matTooltip="{{ seat.id }}: {{ seat.status }}">
           </div>
-          <div *ngSwitchCase="'T1'" class="cubicle t1">
-            <div class="seats-container">
-              <div class="seat" [ngClass]="{'reserved': row.seats[0]?.status === 'Reserved', 'unreserved': row.seats[0]?.status === 'Unreserved'}" matTooltip="{{ row.seats[0]?.id }}: {{ row.seats[0]?.status }}"></div>
-            </div>
-          </div>
-          <div *ngSwitchCase="'T2'" class="cubicle t2">
-            <div class="seats-container">
-              <div class="seat" *ngFor="let seat of row.seats" [ngClass]="{'reserved': seat.status === 'Reserved', 'unreserved': seat.status === 'Unreserved'}" matTooltip="{{ seat.id }}: {{ seat.status }}"></div>
-            </div>
-          </div>
-          <div *ngSwitchCase="'T4'" class="cubicle t4">
-            <div class="seats-container">
-              <div class="seat" *ngFor="let seat of row.seats.slice(0, 2)" [ngClass]="{'reserved': seat.status === 'Reserved', 'unreserved': seat.status === 'Unreserved'}" matTooltip="{{ seat.id }}: {{ seat.status }}"></div>
-            </div>
-            <div class="seats-container">
-              <div class="seat" *ngFor="let seat of row.seats.slice(2, 4)" [ngClass]="{'reserved': seat.status === 'Reserved', 'unreserved': seat.status === 'Unreserved'}" matTooltip="{{ seat.id }}: {{ seat.status }}"></div>
-            </div>
-          </div>
-        </ng-container>
+        </div>
       </div>
     </div>
   </div>
+</div>

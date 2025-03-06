@@ -30,19 +30,19 @@
     margin: 5px; /* Reduced margin */
   }
   
-  .cubicle.t0 {
-    background-color: #D3D3D3; /* Light Gray for T0 */
+  .cubicle-t0 {
+    background-color: #100404; /* Light Gray for T0 */
   }
   
-  .cubicle.t1 {
+  .cubicle-t1 {
     background-color: #ADD8E6; /* Light Blue for T1 */
   }
   
-  .cubicle.t2 {
+  .cubicle-t2 {
     background-color: #FFFFE0; /* Light Yellow for T2 */
   }
   
-  .cubicle.t4 {
+  .cubicle-t4 {
     background-color: #E6E6FA; /* Light Purple for T4 */
   }
   
