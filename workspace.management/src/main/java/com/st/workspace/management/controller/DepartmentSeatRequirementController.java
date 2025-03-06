@@ -29,4 +29,10 @@ public class DepartmentSeatRequirementController {
     public ResponseEntity<List<DepartmentSeatRequirement>> saveAllDepartmentSeatRequirements(@RequestBody List<DepartmentSeatRequirement> departmentSeatRequirements) {
         return ResponseEntity.ok(departmentSeatRequirementService.saveAllDepartmentSeatRequirements(departmentSeatRequirements));
     }
+    
+    @PostMapping("/populate")
+    public ResponseEntity<Void> populateDepartmentData() {
+        departmentSeatRequirementService.populateDepartmentData();
+        return ResponseEntity.ok().build();
+    }
 }

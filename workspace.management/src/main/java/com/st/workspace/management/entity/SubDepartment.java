@@ -22,6 +22,7 @@ public class SubDepartment {
     private Department department;
 
     private String name;
+    private Integer headCount;
 
     @OneToMany(mappedBy = "subDepartment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<JobGrade> jobGrades;

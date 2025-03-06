@@ -7,4 +7,6 @@ import com.st.workspace.management.entity.Department;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Long> {
+
+	Department findByName(String department);
 }
