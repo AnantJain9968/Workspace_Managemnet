@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.st.workspace.management.entity.Site;
+import com.st.workspace.management.interfaces.SiteProjection;
 import com.st.workspace.management.repository.SiteRepository;
 
 import java.util.List;
@@ -22,6 +23,11 @@ public class SiteService {
     public List<Site> getAllSites() {
         return siteRepository.findAll();
     }
+    public List<SiteProjection> getAllSitesName() {
+        return siteRepository.findAllProjectedBy();
+    }
+    
+    
 
     public Optional<Site> getSiteById(Long siteId) {
         return siteRepository.findById(siteId);

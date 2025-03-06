@@ -5,6 +5,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
+interface Site {
+  siteId: number;
+  name: string;
+  location: string;
+  image:string;
+}
 
 @Component({
   selector: 'app-home',
@@ -13,35 +21,46 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, MatCardModule, MatInputModule, MatFormFieldModule, FormsModule]
 })
-export class HomeComponent implements OnInit {
-  offices = [
-    { city: 'New York', country: 'USA', image: 'assets/office.jpg' },
-    { city: 'London', country: 'UK', image: 'assets/office.jpg' },
-    { city: 'Paris', country: 'France', image: 'assets/office.jpg' },
-    { city: 'Berlin', country: 'Germany', image: 'assets/office.jpg' },
-    { city: 'Tokyo', country: 'Japan', image: 'assets/office.jpg' },
-    { city: 'Sydney', country: 'Australia', image: 'assets/office.jpg' },
-    { city: 'Toronto', country: 'Canada', image: 'assets/office.jpg' },
-    { city: 'San Francisco', country: 'USA', image: 'assets/office.jpg' },
-    { city: 'Singapore', country: 'Singapore', image: 'assets/office.jpg' },
-    { city: 'Hong Kong', country: 'China', image: 'assets/office.jpg' },
-    { city: 'Dubai', country: 'UAE', image: 'assets/office.jpg' },
-    { city: 'Mumbai', country: 'India', image: 'assets/office.jpg' },
-    { city: 'São Paulo', country: 'Brazil', image: 'assets/office.jpg' },
-    { city: 'Moscow', country: 'Russia', image: 'assets/office.jpg' },
-    { city: 'Johannesburg', country: 'South Africa', image: 'assets/office.jpg' },
-    { city: 'Shanghai', country: 'China', image: 'assets/office.jpg' },
-    { city: 'Mexico City', country: 'Mexico', image: 'assets/office.jpg' },
-    { city: 'Buenos Aires', country: 'Argentina', image: 'assets/office.jpg' },
-    { city: 'Istanbul', country: 'Turkey', image: 'assets/office.jpg' },
-    { city: 'Seoul', country: 'South Korea', image: 'assets/office.jpg' }
-  ];
 
-  filteredOffices = [...this.offices];
+export class HomeComponent implements OnInit {
+
+  offices !: Site[];
+  
+
+  // offices = [
+  //   { city: 'New York', country: 'USA', image: 'assets/office.jpg' },
+  //   { city: 'London', country: 'UK', image: 'assets/office.jpg' },
+  //   { city: 'Paris', country: 'France', image: 'assets/office.jpg' },
+  //   { city: 'Berlin', country: 'Germany', image: 'assets/office.jpg' },
+  //   { city: 'Tokyo', country: 'Japan', image: 'assets/office.jpg' },
+  //   { city: 'Sydney', country: 'Australia', image: 'assets/office.jpg' },
+  //   { city: 'Toronto', country: 'Canada', image: 'assets/office.jpg' },
+  //   { city: 'San Francisco', country: 'USA', image: 'assets/office.jpg' },
+  //   { city: 'Singapore', country: 'Singapore', image: 'assets/office.jpg' },
+  //   { city: 'Hong Kong', country: 'China', image: 'assets/office.jpg' },
+  //   { city: 'Dubai', country: 'UAE', image: 'assets/office.jpg' },
+  //   { city: 'Mumbai', country: 'India', image: 'assets/office.jpg' },
+  //   { city: 'São Paulo', country: 'Brazil', image: 'assets/office.jpg' },
+  //   { city: 'Moscow', country: 'Russia', image: 'assets/office.jpg' },
+  //   { city: 'Johannesburg', country: 'South Africa', image: 'assets/office.jpg' },
+  //   { city: 'Shanghai', country: 'China', image: 'assets/office.jpg' },
+  //   { city: 'Mexico City', country: 'Mexico', image: 'assets/office.jpg' },
+  //   { city: 'Buenos Aires', country: 'Argentina', image: 'assets/office.jpg' },
+  //   { city: 'Istanbul', country: 'Turkey', image: 'assets/office.jpg' },
+  //   { city: 'Seoul', country: 'South Korea', image: 'assets/office.jpg' }
+  // ];
+
+  filteredOffices!: Site[];
   filterText = '';
-  constructor(private router: Router) { }
+  constructor(private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.http.get(`http://localhost:8080/api/sites/siteName`).subscribe((data: any) => {
+      this.offices = data;
+      this.filteredOffices = [...this.offices];
+      console.log('Sites:', this.offices);
+    });
+    
   }
 
   navigateToBuilding(site: string): void {
@@ -50,7 +69,7 @@ export class HomeComponent implements OnInit {
 
   filterOffices(): void {
     this.filteredOffices = this.offices.filter(office =>
-      office.city.toLowerCase().includes(this.filterText.toLowerCase())
+      office.location.toLowerCase().includes(this.filterText.toLowerCase())
     );
   }
 }

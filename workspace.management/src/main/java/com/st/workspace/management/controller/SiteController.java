@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.st.workspace.management.entity.Site;
+import com.st.workspace.management.interfaces.SiteProjection;
 import com.st.workspace.management.service.SiteService;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/sites")
+@CrossOrigin("*")
 public class SiteController {
 
     @Autowired
@@ -28,6 +30,20 @@ public class SiteController {
         List<Site> sites = siteService.getAllSites();
         return ResponseEntity.ok(sites);
     }
+    
+    @GetMapping("/siteName")
+    public ResponseEntity<List<SiteProjection>> getAllSitesName() {
+    	 List<SiteProjection> sites = siteService.getAllSitesName();
+    	    for (SiteProjection site : sites) {
+    	        System.out.println("Site ID: " + site.getSiteId());
+    	        System.out.println("Name: " + site.getName());
+    	        System.out.println("Location: " + site.getLocation());
+    	    }
+    	    return ResponseEntity.ok(sites);
+    }
+    
+    
+   
 
     @GetMapping("/{id}")
     public ResponseEntity<Site> getSiteById(@PathVariable Long id) {
