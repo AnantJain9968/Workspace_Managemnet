@@ -1,0 +1,11 @@
+<div class="building-container">
+    <h2>{{ site }} Buildings</h2>
+    <div class="building-card" *ngFor="let building of buildings" (click)="navigateToFloor(building.name)">
+      <mat-card>
+        <img mat-card-image [src]="building.image" alt="Building">
+        <mat-card-content>
+          <h3>{{ building.name }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
