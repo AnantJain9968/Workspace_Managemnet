@@ -11,4 +11,6 @@ import com.st.workspace.management.interfaces.SiteProjection;
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Long> {
 	List<SiteProjection> findAllProjectedBy();
+
+	Site findByNameAndLocation(String name, String location);
 }

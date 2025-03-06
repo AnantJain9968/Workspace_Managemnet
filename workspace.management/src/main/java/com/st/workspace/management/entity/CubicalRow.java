@@ -21,23 +21,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "spam_sub_department")
+@Table(name = "spam_cubical_row")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "subDepartmentId")
-public class SubDepartment {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "rowId")
+public class CubicalRow {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long subDepartmentId;
+    private Long rowId;
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @JoinColumn(name = "floor_id")
+    private Floor floor;
 
-    private String name;
-    private Integer headCount;
-
-    @OneToMany(mappedBy = "subDepartment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<JobGrade> jobGrades;
+    @OneToMany(mappedBy = "cubicalRow", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Cubical> cubicals;
 }

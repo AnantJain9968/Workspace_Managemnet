@@ -29,4 +29,10 @@ public class SiteSeatCapacityController {
     public ResponseEntity<List<SiteSeatCapacity>> saveAllSiteSeatCapacities(@RequestBody List<SiteSeatCapacity> siteSeatCapacities) {
         return ResponseEntity.ok(siteSeatCapacityService.saveAllSiteSeatCapacities(siteSeatCapacities));
     }
+    
+    @PostMapping("/populate")
+    public ResponseEntity<Void> populateBuildingData() {
+        siteSeatCapacityService.populateBuildingData();
+        return ResponseEntity.ok().build();
+    }
 }

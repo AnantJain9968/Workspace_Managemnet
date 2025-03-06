@@ -24,6 +24,10 @@ public class SeatAllocation {
     @ManyToOne
     @JoinColumn(name = "seat_id")
     private Seat seat;
+    
+    @ManyToOne
+    @JoinColumn(name = "sub_department_id")
+    private SubDepartment subDepartment;
 
     private Date allocationDate;
     private String status; // Allocated, Vacant, Reserved
