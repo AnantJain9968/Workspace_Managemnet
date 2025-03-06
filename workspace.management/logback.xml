@@ -21,7 +21,7 @@
   </root>	
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/LOG_RECV_TE/TREX/LOG/trex.log</file>
+		<file>/LOG_RECV_TE/WORKSPACE/LOG/workspace.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<fileNamePattern>/LOG_RECV_TE/WORKSPACE/LOG/workspace.%d{yyyy-MM-dd}.log</fileNamePattern>
 		</rollingPolicy>
