@@ -1,9 +1,11 @@
+<!-- app.component.html -->
 <mat-toolbar color="primary">
-    <span class="header-title">
-      <mat-icon>business</mat-icon>
-      EWMS
-    </span>
-    <span class="spacer"></span>
-    <button mat-button routerLink="/login">Login</button>
-    <button mat-button routerLink="/profile">User Profile</button>
-  </mat-toolbar>
+  <a href="/" class="header-title">
+    <mat-icon>business</mat-icon>
+    EWMS
+  </a>
+  <span class="spacer"></span>
+  <button mat-button *ngIf="!(authService.isLoggedIn | async)" (click)="onLogin()">Login</button>
+  <button mat-button *ngIf="authService.isLoggedIn | async" (click)="onLogout()">Logout</button>
+  <button mat-button routerLink="/profile">User Profile</button>
+</mat-toolbar>

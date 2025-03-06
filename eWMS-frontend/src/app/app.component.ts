@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet,RouterModule } from '@angular/router';
+import { AuthService } from './auth.service';
 import { HeaderComponent } from "./header/header.component";
 
 
@@ -11,4 +12,8 @@ import { HeaderComponent } from "./header/header.component";
 })
 export class AppComponent {
   title = 'eWMS-frontend';
+
+
+
+ 
 }
