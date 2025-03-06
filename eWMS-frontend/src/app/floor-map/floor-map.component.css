@@ -1,0 +1,83 @@
+.floor-map-container {
+    padding: 20px;
+  }
+  
+  .row-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; /* Align items to the start */
+  }
+  
+  .cubicle-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Align cubicles to the left */
+    width: 100%;
+  }
+  
+  .cubicle {
+    padding: 2px; /* Reduced padding */
+    border-radius: 8px;
+    color: white;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 18%; /* Adjusted width to fit 5-6 cubicles per row */
+    margin: 5px; /* Reduced margin */
+  }
+  
+  .cubicle.t0 {
+    background-color: #D3D3D3; /* Light Gray for T0 */
+  }
+  
+  .cubicle.t1 {
+    background-color: #ADD8E6; /* Light Blue for T1 */
+  }
+  
+  .cubicle.t2 {
+    background-color: #FFFFE0; /* Light Yellow for T2 */
+  }
+  
+  .cubicle.t4 {
+    background-color: #E6E6FA; /* Light Purple for T4 */
+  }
+  
+  .cubicle h4 {
+    margin: 0 0 5px 0;
+  }
+  
+  .cubicle p {
+    margin: 0 0 10px 0;
+  }
+  
+  .seats-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .seat {
+    width: 20px; /* Adjusted size */
+    height: 20px; /* Adjusted size */
+    margin: 1px; /* Reduced margin */
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+  
+  .seat.reserved {
+    background-color: red; /* Red for reserved */
+  }
+  
+  .seat.unreserved {
+    background-color: green; /* Green for unreserved */
+  }

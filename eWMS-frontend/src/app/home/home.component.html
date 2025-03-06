@@ -1,0 +1,19 @@
+<div class="home-container">
+    <div class="filter-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by City</mat-label>
+        <input matInput [(ngModel)]="filterText" (input)="filterOffices()" placeholder="Enter city name">
+      </mat-form-field>
+    </div>
+    <div class="office-cards-container">
+      <div class="office-card" *ngFor="let office of filteredOffices" (click)="navigateToBuilding(office.city)">
+        <mat-card>
+          <img mat-card-image [src]="office.image" alt="Corporate Office">
+          <mat-card-content>
+            <h3>{{ office.city }}</h3>
+            <p>{{ office.country }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
