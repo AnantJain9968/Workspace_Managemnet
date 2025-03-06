@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -32,4 +33,12 @@ public class JobGrade {
 
     private String grade; // JT-1, JT-2, ..., JT-10
     private Integer headCount;
+    private String status; // Unallocated, Reserved, Allocated
+    
+    @PrePersist
+    protected void onCreate() {
+        if (status == null) {
+            status = "Unallocated";
+        }
+    }
 }
