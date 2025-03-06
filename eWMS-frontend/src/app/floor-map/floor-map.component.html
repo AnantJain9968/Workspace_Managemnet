@@ -1,7 +1,6 @@
 <div class="floor-map-container">
   <h2>{{ floor }} Layout</h2>
   <div *ngFor="let row of rows" class="row-container">
-    <h3>{{ row.id }}</h3>
     <div class="cubicle-container">
       <div *ngFor="let cubicle of row.cubicles" class="cubicle" 
       [ngClass]=
@@ -9,12 +8,11 @@
        'cubicle-t2': cubicle.seats.length === 2,
         'cubicle-t1': cubicle.seats.length === 1 && cubicle.seats[0].type==='T1',
         'cubicle-t0':cubicle.seats.length === 1 && cubicle.seats[0].type==='T0'}">
-        <h4>Cubicle {{ cubicle.cublicleId }}</h4>
         <div class="seats-container">
           <div *ngFor="let seat of cubicle.seats" 
                class="seat" 
-               [ngClass]="{'reserved': seat.status === 'Reserved', 'unreserved': seat.status === 'Unreserved'}" 
-               matTooltip="{{ seat.id }}: {{ seat.status }}">
+               [ngClass]="{'reserved': seat.status === 'Reserved', 'unreserved': seat.status === 'Unreserved'}">
+            {{ seat.id }}
           </div>
         </div>
       </div>

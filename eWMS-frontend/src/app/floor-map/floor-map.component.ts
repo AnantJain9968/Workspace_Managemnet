@@ -90,7 +90,7 @@ export class FloorMapComponent implements OnInit {
           cublicleId:'04',
           seats:[
             {
-              id: 'Seat8', type: 'T0', status: 'UnReserved'         
+              id: 'Seat8', type: 'T0', status: 'Unreserved'         
             },
           ]
         },
@@ -122,7 +122,7 @@ export class FloorMapComponent implements OnInit {
           cublicleId:'07',
           seats:[
             {
-              id: 'Seat15', type: 'T1', status: 'Reserved'         
+              id: 'Seat15', type: 'T0', status: 'Reserved'         
             },
           ]
         },
@@ -130,7 +130,7 @@ export class FloorMapComponent implements OnInit {
           cublicleId:'08',
           seats:[
             {
-              id: 'Seat16', type: 'T0', status: 'UnReserved'         
+              id: 'Seat16', type: 'T1', status: 'UnReserved'         
             },
           ]
         }
