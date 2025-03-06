@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Employee Information</h1>
+<div mat-dialog-content>
+  <div class="employee-info">
+    <p><strong>Name:</strong> {{ data.name }}</p>
+    <p><strong>Position:</strong> {{ data.position }}</p>
+    <p><strong>Department:</strong> {{ data.department }}</p>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

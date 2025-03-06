@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
 
 interface Seat {
   id: string;
@@ -18,7 +21,11 @@ interface Row {
   id: string;
   cubicles: Cubicle[];
 }
-
+interface Employee {
+  name: string;
+  position: string;
+  department: string;
+}
 @Component({
   selector: 'app-floor-map',
   templateUrl: './floor-map.component.html',
@@ -28,6 +35,12 @@ interface Row {
 })
 export class FloorMapComponent implements OnInit {
   floor: string | null = null;
+  private employeeData: { [key: string]: Employee } = {
+    'Seat1': { name: 'John Doe', position: 'Software Engineer', department: 'Development' },
+    'Seat2': { name: 'Jane Smith', position: 'Project Manager', department: 'Management' },
+    'Seat3': { name: 'Alice Johnson', position: 'UX Designer', department: 'Design' },
+    // Add more static data as needed
+  };
   // rows: Row[] = [
   //   {
   //     id: 'R1',
@@ -139,10 +152,37 @@ export class FloorMapComponent implements OnInit {
   ];
     
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute,private http: HttpClient, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.floor = this.route.snapshot.paramMap.get('floor');
   }
+  onSeatClick(seatId: string) {
+    // this.http.get(`your-api-endpoint/seats/${seatId}`).subscribe((employee: any) => {
+    //   this.openDialog(employee);
+    // });
+
+    const employee = this.employeeData[seatId];
+    if (employee) {
+      this.openDialog(employee);
+    } else {
+      console.error('No employee data found for seat ID:', seatId);
+    }
   
+}
+
+openDialog(employee: any): void {
+  const dialogRef = this.dialog.open(EmployeeDialogComponent, {
+    width: '300px',
+    data: { 
+      name: employee.name,
+      position: employee.position,
+      department: employee.department
+    }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+  });
+}
 }
