@@ -1,0 +1,32 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .filter-container {
+    margin-bottom: 20px;
+  }
+  
+  .office-cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .office-card {
+    cursor: pointer;
+  }
+  
+  mat-card {
+    height: 100%;
+  }
+  
+  mat-card img {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  mat-card-content {
+    text-align: center;
+  }
