@@ -2,6 +2,7 @@ package com.st.workspace.management.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.st.workspace.management.entity.Department;
 import com.st.workspace.management.entity.DepartmentSeatRequirement;
@@ -40,6 +41,7 @@ public class DepartmentSeatRequirementService {
         return departmentSeatRequirementRepository.saveAll(departmentSeatRequirements);
     }
     
+    @Transactional
     public void populateDepartmentData() {
         List<DepartmentSeatRequirement> requirements = getAllDepartmentSeatRequirements();
 

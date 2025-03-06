@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.st.workspace.management.entity.Site;
 import com.st.workspace.management.repository.SiteRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,13 @@ public class SiteService {
     }
 
     public List<Site> getAllSites() {
-        return siteRepository.findAll();
+    	List<Site> sites = new ArrayList<>();
+    	try {
+    		sites= siteRepository.findAll();
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    	}
+		return sites;
     }
 
     public Optional<Site> getSiteById(Long siteId) {
