@@ -16,12 +16,25 @@ import { ToastrService } from 'ngx-toastr';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { catchError, tap, throwError } from 'rxjs';
+import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-employee-tracker',
   standalone: true,
-  imports: [ ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatButtonModule,MatOptionModule,CommonModule,MatSelectModule],
+  imports: [ ReactiveFormsModule,
+    MatFormFieldModule,MatInputModule,MatButtonModule,MatOptionModule,CommonModule,MatSelectModule,BrowserAnimationsModule],
   templateUrl: './employee-tracker.component.html',
-  styleUrl: './employee-tracker.component.css'
+  styleUrl: './employee-tracker.component.css',
+  animations: [
+    trigger('flyInOut', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)' }),
+        animate('300ms ease-in', style({ transform: 'translateX(0)' }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({ transform: 'translateX(100%)' }))
+      ])
+    ])
+  ]
 })
 
 export class EmployeeTrackerComponent implements OnInit {

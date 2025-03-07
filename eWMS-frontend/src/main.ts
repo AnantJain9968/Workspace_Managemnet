@@ -27,14 +27,13 @@ const routes: Routes = [
     path: 'building', component: SiteSidebarComponent,
     children: [
       { path: ':siteId', component: ViewBuildingComponent },
-      // { path: 'reports/:siteId', component: ReportsComponent },
+      { path: 'reports/:siteId', component: ReportComponent },
       { path: 'employeeTracker/:siteId', component: EmployeeTrackerComponent },
       // { path: 'team-tracker/:siteId', component: TeamTrackerComponent }
     ]
   },
-  { path: 'employeeTracker/:site', component: EmployeeTrackerComponent },
-  { path: 'floor/:building', component: FloorComponent },
-  { path: 'floor-map/:floor', component: FloorMapComponent },
+  { path: 'floor/:buildingId', component: FloorComponent },
+  { path: 'floor-map/:floorId', component: FloorMapComponent },
   //   { path: 'view23',component: BuildingComponent,
   //     children:[{
   //       path:"view-building/:siteId",

@@ -25,7 +25,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Job Grade</mat-label>
-      <input matInput formControlName="jobGradeName" placeholder="Enter employee name">
+      <input matInput formControlName="jobGradeName" placeholder="Enter Job Grade">
       <mat-select formControlName="jobGradeName">
         <mat-option *ngFor="let grade of jobGrades" [value]="grade">
           {{ grade }}

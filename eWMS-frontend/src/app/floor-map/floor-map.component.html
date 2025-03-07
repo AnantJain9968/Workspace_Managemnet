@@ -1,13 +1,15 @@
 <div class="floor-map-container">
-  <h2>{{ floor }} Layout</h2>
-  <div *ngFor="let row of rows" class="row-container">
+  <h2> Layout</h2>
+  <div *ngFor="let row of rows; let i = index" class="row-container">
+    <p> Row Id is {{ counter + i }}</p>
     <div class="cubicle-container">
+       
       <div *ngFor="let cubicle of row.cubicles" class="cubicle" 
       [ngClass]=
       "{'cubicle-t4': cubicle.seats.length === 4,
        'cubicle-t2': cubicle.seats.length === 2,
-        'cubicle-t1': cubicle.seats.length === 1 && cubicle.seats[0].type==='T1',
-        'cubicle-t0':cubicle.seats.length === 1 && cubicle.seats[0].type==='T0'}">
+        'cubicle-t1': cubicle.seats.length === 1 && cubicle.seats[0].type==='ONE',
+        'cubicle-t0':cubicle.seats.length === 1 && cubicle.seats[0].type==='ENCLOSED'}">
         <div class="seats-container">
           <div *ngFor="let seat of cubicle.seats" 
                class="seat" 

@@ -31,7 +31,8 @@ siteId!: any;
          });
   }
 
-  navigateToFloor(building: string): void {
-    this.router.navigate(['/floor', building]);
+  navigateToFloor(buildingId: string): void {
+    console.log("building id"+buildingId)
+    this.router.navigate(['/floor', buildingId]);
   }
 }

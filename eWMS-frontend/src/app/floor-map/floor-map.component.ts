@@ -5,27 +5,70 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+import { environment } from '../../environments/env';
 
 interface Seat {
   id: string;
   type: string;
   status: string;
 }
-
-interface Cubicle{
+ 
+interface Cubicle {
   cublicleId: string;
   seats: Seat[];
 }
-
+ 
 interface Row {
   id: string;
   cubicles: Cubicle[];
 }
+
 interface Employee {
   name: string;
   position: string;
   department: string;
 }
+
+interface ApiSeat {
+  seatId: number;
+  seatNumber: string;
+  seatAreaType: string;
+  seatStatus: string;
+  lastUpdated: string;
+}
+ 
+interface ApiCubicle {
+  cubicalId: number;
+  cubicalRow: number;
+  cubicalType: string;
+  seats: ApiSeat[];
+}
+ 
+interface ApiRow {
+  rowId: number;
+  floor: number;
+  cubicals: ApiCubicle[];
+}
+ 
+interface ApiResponse {
+  floorId: number;
+  building: {
+    buildingId: number;
+    name: string;
+    site: {
+      siteId: number;
+      name: string;
+      location: string;
+      buildings: number[];
+    };
+    floors: number[];
+  };
+  totalSeats: number;
+  startingSeatNum: number;
+  name: string;
+  cubicalRows: ApiRow[];
+}
+ 
 @Component({
   selector: 'app-floor-map',
   templateUrl: './floor-map.component.html',
@@ -34,11 +77,12 @@ interface Employee {
   imports: [CommonModule, MatTooltipModule]
 })
 export class FloorMapComponent implements OnInit {
-  floor: string | null = null;
+  floorId: any;
+  counter: number = 1;
   private employeeData: { [key: string]: Employee } = {
-    'Seat1': { name: 'John Doe', position: 'Software Engineer', department: 'Development' },
-    'Seat2': { name: 'Jane Smith', position: 'Project Manager', department: 'Management' },
-    'Seat3': { name: 'Alice Johnson', position: 'UX Designer', department: 'Design' },
+    '13': { name: 'John Doe', position: 'Software Engineer', department: 'Development' },
+    '23': { name: 'Jane Smith', position: 'Project Manager', department: 'Management' },
+    '33': { name: 'Alice Johnson', position: 'UX Designer', department: 'Design' },
     // Add more static data as needed
   };
   // rows: Row[] = [
@@ -63,8 +107,8 @@ export class FloorMapComponent implements OnInit {
   //       { id: 'Seat16', type: 'T0', status: 'Unreserved',cubicle:'08' }
   //     ]
   //   };
-
-    rows :  Row[] = [{
+    rows!: Row[];
+    rows1 :  Row[] = [{
       id:'R1',
       cubicles:[
         {
@@ -155,7 +199,17 @@ export class FloorMapComponent implements OnInit {
   constructor(private route: ActivatedRoute,private http: HttpClient, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.floor = this.route.snapshot.paramMap.get('floor');
+    this.floorId = this.route.snapshot.paramMap.get('floorId');
+    this.getFloorLayout();
+  }
+
+  getFloorLayout(): void{
+    this.http.get(`${environment.apiUrl}/api/floors/${this.floorId}`).subscribe((data: any) => {
+                   
+                   console.log('layout data of floor:', data);
+                   this.rows=this.transformApiData(data);
+                   console.log(this.rows);
+                 });
   }
   onSeatClick(seatId: string) {
     // this.http.get(`your-api-endpoint/seats/${seatId}`).subscribe((employee: any) => {
@@ -184,5 +238,21 @@ openDialog(employee: any): void {
   dialogRef.afterClosed().subscribe(result => {
     console.log('The dialog was closed');
   });
+
+
+}
+
+transformApiData(apiData: ApiResponse): Row[] {
+  return apiData.cubicalRows.map(apiRow => ({
+    id: `R${apiRow.rowId}`,
+    cubicles: apiRow.cubicals.map(apiCubicle => ({
+      cublicleId: apiCubicle.cubicalId.toString(),
+      seats: apiCubicle.seats.map(apiSeat => ({
+        id: `${apiSeat.seatId}`,
+        type: apiCubicle.cubicalType,
+        status: apiSeat.seatStatus === 'Vacant' ? 'Unreserved' : apiSeat.seatStatus
+      }))
+    }))
+  }));
 }
 }

@@ -1,8 +1,8 @@
 <div class="building-container">
-  <h2>{{ siteId }} Buildings</h2>
-  <div class="building-card" *ngFor="let building of buildings" (click)="navigateToFloor(building.name)">
+  <h2> Buildings</h2>
+  <div class="building-card" *ngFor="let building of buildings" (click)="navigateToFloor(building.buildingId)">
     <mat-card>
-      <img mat-card-image [src]="building.image" alt="Building">
+      <img mat-card-image src="assets/site/greater-noida-campus.jpg" alt="Building">
       <mat-card-content>
         <h3>{{ building.name }}</h3>
       </mat-card-content>

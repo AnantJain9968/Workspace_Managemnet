@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/env';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-floor',
@@ -11,17 +13,19 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, MatCardModule]
 })
 export class FloorComponent implements OnInit {
-  building: string | null = null;
-  floors = [
-    { name: 'Floor 1', image: 'assets/floor1.jpg' },
-    { name: 'Floor 2', image: 'assets/floor2.jpg' },
-    { name: 'Floor 3', image: 'assets/floor3.jpg' }
-  ];
+  buildingId!: any;
+  floors! : any;
 
-  constructor(private route: ActivatedRoute,private router: Router) { }
+  constructor(private route: ActivatedRoute,private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.building = this.route.snapshot.paramMap.get('building');
+    this.buildingId = this.route.snapshot.paramMap.get('buildingId');
+
+    this.http.get(`${environment.apiUrl}/api/building/${this.buildingId}`).subscribe((data: any) => {
+               
+               console.log('Floors in  building:', data);
+                             this.floors=data.floors;
+             });
   }
 
   navigateToFloorMap(floor: string): void {

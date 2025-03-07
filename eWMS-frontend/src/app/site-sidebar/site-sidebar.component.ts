@@ -41,4 +41,8 @@ export class SiteSidebarComponent implements OnInit {
     this.router.navigate(['/building/employeeTracker', this.authService.getCurrentSiteId()]);
   }
 
+  navigateToReports(): void{
+    this.router.navigate(['/building/reports', this.authService.getCurrentSiteId()]);
+  }
+
 }
