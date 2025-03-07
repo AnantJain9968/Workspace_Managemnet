@@ -1,0 +1,22 @@
+.building-container {
+    padding: 20px;
+  }
+  
+  .building-card {
+    display: inline-block;
+    width: 23%;
+    margin: 1%;
+  }
+  
+  mat-card {
+    height: 100%;
+  }
+  
+  mat-card img {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  mat-card-content {
+    text-align: center;
+  }

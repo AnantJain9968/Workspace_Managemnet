@@ -6,7 +6,7 @@
       </mat-form-field>
     </div>
     <div class="office-cards-container">
-      <div class="office-card" *ngFor="let office of filteredOffices" (click)="navigateToBuilding(office.location)">
+      <div class="office-card" *ngFor="let office of filteredOffices" (click)="navigateToBuilding(office.siteId)">
         <mat-card>
           <img mat-card-image [src]="office.image" alt="Corporate Office">
           <mat-card-content>

@@ -1,0 +1,24 @@
+<!-- <li class="sidebar-tab">
+    <a [routerLink]="['/view23/view-building', site]">View Buildings</a>
+  </li>
+  <li class="sidebar-tab">
+    <a [routerLink]="['/view23/reports',site]">Reports</a>
+  </li>
+  <li class="sidebar-tab">
+    <a [routerLink]="['/view23/employeeTracker', site]">Employee Tracker</a>
+  </li>
+  <li class="sidebar-tab">
+    <a [routerLink]="['/view23/team-tracker',site]">Team Tracker</a>
+  </li> -->
+
+
+  <mat-card>
+    
+    <mat-action-list>
+        <div mat-subheader>Menu</div>
+        <button mat-list-item 
+        [routerLink]="['/view23/view-building', siteId]"
+         ><mat-icon mat-list-icon>home</mat-icon> View Buildings </button>
+        <button mat-list-item routerLink='/view23/reports'><mat-icon mat-list-icon>playlist_add</mat-icon> Reports </button>
+      </mat-action-list>
+</mat-card>
