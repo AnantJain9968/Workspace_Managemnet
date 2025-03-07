@@ -1,0 +1,5 @@
+<div class="chart-container">
+    <div *ngFor="let chartOption of chartOptionsArray" class="chart-item">
+      <canvasjs-chart [options]="chartOption" [styles]="{width: '50%', height:'120px'}"></canvasjs-chart>
+    </div>
+  </div>
