@@ -14,7 +14,7 @@ import com.st.workspace.management.entity.SubDepartment;
 @Repository
 public interface JobGradeRepository extends JpaRepository<JobGrade, Long> {
 	
-	@Query("SELECT DISTINCT j.grade FROM JobGrade j")
+	@Query("SELECT DISTINCT j.grade FROM JobGrade j order by j.grade")
     List<String> findDistinctGrades();
 
 	Optional<JobGrade> findBySubDepartmentAndGrade(SubDepartment subDepartment, String jobGradeName);
