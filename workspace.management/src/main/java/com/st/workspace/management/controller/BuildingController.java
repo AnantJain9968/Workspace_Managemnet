@@ -31,6 +31,12 @@ public class BuildingController {
         return ResponseEntity.ok(sites);
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<Building> getBuildingById(@PathVariable Long id) {
+        Optional<Building> building = buildingService.getBuildingById(id);
+        return building.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
     @GetMapping("/siteName")
     public ResponseEntity<List<SiteProjection>> getAllSitesName() {
     	 List<SiteProjection> sites = siteService.getAllSitesName();
@@ -45,13 +51,13 @@ public class BuildingController {
     
    
 
-    @GetMapping("/{id}")
+    @GetMapping("/site/{id}")
     public ResponseEntity<Building> getBuildingsBySiteId(@PathVariable Long id) {
         Optional<Building> building = buildingService.getBuildingsBySiteId(id);
         return building.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteSite(@PathVariable Long id) {
         siteService.deleteSite(id);
         return ResponseEntity.noContent().build();
