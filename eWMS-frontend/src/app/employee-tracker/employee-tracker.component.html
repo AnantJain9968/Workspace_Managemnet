@@ -8,7 +8,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Department Name</mat-label>
       <!-- <input matInput formControlName="department" placeholder="Enter employee name"> -->
-      <mat-select formControlName="department" (selectionChange)="onDepartmentChange($event)">
+      <mat-select formControlName="departmentId" (selectionChange)="onDepartmentChange($event)">
         <mat-option *ngFor="let department of departments" [value]="department.id">
           {{ department.name }}
         </mat-option>
@@ -17,7 +17,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Sub-Department Name</mat-label>
       <!-- <input matInput formControlName="subDepartment" placeholder="Enter employee name"> -->
-      <mat-select formControlName="subDepartment">
+      <mat-select formControlName="subDepartmentId">
         <mat-option *ngFor="let subDepartment of subDepartments" [value]="subDepartment.id">
           {{ subDepartment.name }}
         </mat-option>
@@ -25,8 +25,8 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Job Grade</mat-label>
-      <input matInput formControlName="jobGrade" placeholder="Enter employee name">
-      <mat-select formControlName="jobGrade">
+      <input matInput formControlName="jobGradeName" placeholder="Enter employee name">
+      <mat-select formControlName="jobGradeName">
         <mat-option *ngFor="let grade of jobGrades" [value]="grade">
           {{ grade }}
         </mat-option>
