@@ -8,8 +8,12 @@ import { FloorMapComponent } from './app/floor-map/floor-map.component';
 import { EmployeeTrackerComponent } from './app/employee-tracker/employee-tracker.component';
 import { BuildingComponent } from './app/building/building.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 import { ViewBuildingComponent } from './app/view-building/view-building.component';
+import { ReportComponent } from './app/report/report.component';
+
 import { SiteSidebarComponent } from './app/site-sidebar/site-sidebar.component';
+import { importProvidersFrom } from '@angular/core';
 
 
 
@@ -48,8 +52,10 @@ const routes: Routes = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptorsFromDi())
-  ]
+    provideHttpClient(withInterceptorsFromDi()),
+    importProvidersFrom(ToastrModule.forRoot())
+  ],
+  
 }).catch(err => console.error(err));
 
 

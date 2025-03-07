@@ -7,36 +7,35 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Department Name</mat-label>
-      <input matInput formControlName="department" placeholder="Enter employee name">
-      <!-- <mat-select formControlName="department" (selectionChange)="onDepartmentChange($event)">
-        <mat-option *ngFor="let department of departments" [value]="department">
-          {{ department }}
+      <!-- <input matInput formControlName="department" placeholder="Enter employee name"> -->
+      <mat-select formControlName="departmentId" (selectionChange)="onDepartmentChange($event)">
+        <mat-option *ngFor="let department of departments" [value]="department.id">
+          {{ department.name }}
         </mat-option>
-      </mat-select> -->
+      </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Sub-Department Name</mat-label>
-      <input matInput formControlName="subDepartment" placeholder="Enter employee name">
-      <!-- <mat-select formControlName="subDepartment">
-        <mat-option *ngFor="let subDepartment of subDepartments" [value]="subDepartment">
-          {{ subDepartment }}
+      <!-- <input matInput formControlName="subDepartment" placeholder="Enter employee name"> -->
+      <mat-select formControlName="subDepartmentId">
+        <mat-option *ngFor="let subDepartment of subDepartments" [value]="subDepartment.id">
+          {{ subDepartment.name }}
         </mat-option>
-      </mat-select> -->
+      </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Job Grade</mat-label>
-      <input matInput formControlName="jobGrade" placeholder="Enter employee name">
-      <!-- <mat-select formControlName="jobGrade">
+      <input matInput formControlName="jobGradeName" placeholder="Enter employee name">
+      <mat-select formControlName="jobGradeName">
         <mat-option *ngFor="let grade of jobGrades" [value]="grade">
           {{ grade }}
         </mat-option>
-      </mat-select> -->
+      </mat-select>
     </mat-form-field>
     <div class="button-group">
-      <button mat-raised-button color="primary">Add</button>
-      <button mat-raised-button color="warn">Delete</button>
-      <button mat-raised-button color="accent">Transfer</button>
+      <button mat-raised-button color="primary" type="button" (click)="addEmployee()">Add</button>
+      <button mat-raised-button color="warn" type="button" (click)="deleteEmployee()">Delete</button>
+      <button mat-raised-button color="accent" type="button" (click)="transferEmployee()">Transfer</button>
     </div>
   </form>
 </div>
-<p> form works</p>
