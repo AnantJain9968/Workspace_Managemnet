@@ -22,7 +22,8 @@ site: string | null = null;
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    // this.site = this.route.snapshot.paramMap.get('site');
+     this.site = this.route.snapshot.paramMap.get('siteId');
+     console.log("Site ID from View building::", this.site);
   }
 
   navigateToFloor(building: string): void {
