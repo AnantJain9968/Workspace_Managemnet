@@ -78,4 +78,41 @@ export class EmployeeTrackerComponent implements OnInit {
     this.employeeForm.get('subDepartment')!.setValue('');
   }
 
+  addEmployee(): void {
+    if (this.employeeForm.valid) {
+      this.http.post(`${environment.apiUrl}/api/seat-allocation/allocateEmployee`, this.employeeForm.value).subscribe(response => {
+        console.log('Employee added successfully', response);
+        // Handle success response
+      }, error => {
+        console.error('Error adding employee', error);
+        // Handle error response
+      });
+    }
+  }
+
+  deleteEmployee(): void {
+    const employeeId = this.employeeForm.get('employeeName')?.value; // Assuming employeeName is unique and used as ID
+    if (employeeId) {
+      this.http.delete(`${environment.apiUrl}/api/employee/delete/${employeeId}`).subscribe(response => {
+        console.log('Employee deleted successfully', response);
+        // Handle success response
+      }, error => {
+        console.error('Error deleting employee', error);
+        // Handle error response
+      });
+    }
+  }
+
+  transferEmployee(): void {
+    if (this.employeeForm.valid) {
+      this.http.put(`${environment.apiUrl}/api/employee/transfer`, this.employeeForm.value).subscribe(response => {
+        console.log('Employee transferred successfully', response);
+        // Handle success response
+      }, error => {
+        console.error('Error transferring employee', error);
+        // Handle error response
+      });
+    }
+  }
+
 }

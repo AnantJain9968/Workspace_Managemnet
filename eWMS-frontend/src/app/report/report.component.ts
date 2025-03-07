@@ -3,6 +3,10 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { MatCardModule } from '@angular/material/card';
 
+import { Chart } from "chart.js";
+
+
+
 @Component({
   selector: 'app-report',
   imports: [CanvasJSAngularChartsModule,CommonModule,MatCardModule],
