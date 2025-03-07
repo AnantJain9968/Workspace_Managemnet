@@ -1,26 +1,22 @@
-<div class="employee-tracker-form">
-    <h2>Employee Tracker</h2>
-    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="employeeName">Employee Name:</label>
-        <input id="employeeName" formControlName="employeeName" type="text" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label for="deptName">Department Name:</label>
-        <input id="deptName" formControlName="deptName" type="text" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label for="subDeptName">Sub-Department Name:</label>
-        <input id="subDeptName" formControlName="subDeptName" type="text" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label for="operation">Operation:</label>
-        <select id="operation" formControlName="operation" class="form-control">
-          <option value="add">Add</option>
-          <option value="delete">Delete</option>
-          <option value="transfer">Transfer</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+<div class="employee-tracker">
+  <h2>Employee Tracker</h2>
+  <form>
+    <mat-form-field appearance="fill">
+      <mat-label>Employee Name</mat-label>
+      <input matInput placeholder="Enter employee name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Department Name</mat-label>
+      <input matInput placeholder="Enter department name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Sub-Department Name</mat-label>
+      <input matInput placeholder="Enter sub-department name">
+    </mat-form-field>
+    <div class="button-group">
+      <button mat-raised-button color="primary">Add</button>
+      <button mat-raised-button color="warn">Delete</button>
+      <button mat-raised-button color="accent">Transfer</button>
+    </div>
+  </form>
+</div>
