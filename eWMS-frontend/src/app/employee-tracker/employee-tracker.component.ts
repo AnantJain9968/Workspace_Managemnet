@@ -15,17 +15,17 @@ import { MatOptionModule } from '@angular/material/core';
 @Component({
   selector: 'app-employee-tracker',
   standalone: true,
-  imports: [ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatButtonModule,MatOptionModule,CommonModule,],
+  imports: [ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatButtonModule,MatOptionModule,CommonModule,MatSelectModule],
   templateUrl: './employee-tracker.component.html',
   styleUrl: './employee-tracker.component.css'
 })
+
 export class EmployeeTrackerComponent implements OnInit {
 
-
   employeeForm!: FormGroup;
-  departments: string[] = ['HR', 'Engineering', 'Marketing'];
-  subDepartments: string[] = [];
-  jobGrades: string[] = ['Grade 1', 'Grade 2', 'Grade 3'];
+  departments: any[] = [];
+  subDepartments: any[] = [];
+  jobGrades: string[] = [];
 
   allSubDepartments = {
     'HR': ['Recruitment', 'Payroll'],
@@ -49,7 +49,11 @@ export class EmployeeTrackerComponent implements OnInit {
     this.http.get(`${environment.apiUrl}/api/department/getDepartmentAndGrades`).subscribe((data: any) => {
       // this.offices = data;
       // this.filteredOffices = [...this.offices];
-      console.log('Department data:', data);
+      
+      
+      this.jobGrades = data.jobGrades;
+      this.departments = data.departments;
+      console.log('Department data:', this.departments);
     });
   }
 
@@ -62,15 +66,11 @@ export class EmployeeTrackerComponent implements OnInit {
 
   onDepartmentChange(event: any): void {
     const selectedDepartment = event.value;
-    // Update subDepartments based on the selected department
-    if (selectedDepartment === 'HR') {
-      this.subDepartments = ['Recruitment', 'Employee Relations'];
-    } else if (selectedDepartment === 'Finance') {
-      this.subDepartments = ['Accounts Payable', 'Accounts Receivable'];
-    } else if (selectedDepartment === 'Engineering') {
-      this.subDepartments = ['Software', 'Hardware'];
-    } else if (selectedDepartment === 'Sales') {
-      this.subDepartments = ['Domestic', 'International'];
+    console.log(this.departments);
+    const department = this.departments.find(dep => dep.id === selectedDepartment);
+    if (department) {
+      this.subDepartments = department.subDepartments;
+      console.log('Subdepartment value is '+ this.subDepartments);
     } else {
       this.subDepartments = [];
     }
