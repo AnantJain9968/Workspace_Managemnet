@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
+import { environment } from '../../environments/env'; 
 
 interface Site {
   siteId: number;
@@ -57,7 +58,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get(`http://dlhcwl00060.dlh.st.com:8080/api/sites/siteName`).subscribe((data: any) => {
+    this.http.get(`${environment.apiUrl}/api/sites/siteName`).subscribe((data: any) => {
       this.offices = data;
       this.filteredOffices = [...this.offices];
       console.log('Sites:', this.offices);

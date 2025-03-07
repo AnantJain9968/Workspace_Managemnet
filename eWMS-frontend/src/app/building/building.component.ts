@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet,RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../../environments/env'; 
 @Component({
   selector: 'app-building',
   imports: [CommonModule, MatCardModule,RouterOutlet,RouterModule],
@@ -31,7 +31,7 @@ export class BuildingComponent implements OnInit {
     // this.siteId = this.route.snapshot.paramMap.get('siteId');
     console.log(this.siteId);
 
-    this.http.get(`http://dlhcwl00060.dlh.st.com:8080/api/sites/${this.siteId}`).subscribe((data: any) => {
+    this.http.get(`${environment.apiUrl}/api/sites/${this.siteId}`).subscribe((data: any) => {
       // this.offices = data;
       // this.filteredOffices = [...this.offices];
       console.log('Sites:', data);

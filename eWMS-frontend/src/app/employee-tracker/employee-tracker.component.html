@@ -1,17 +1,36 @@
 <div class="employee-tracker">
   <h2>Employee Tracker</h2>
-  <form>
+  <form [formGroup]="employeeForm">
     <mat-form-field appearance="fill">
       <mat-label>Employee Name</mat-label>
-      <input matInput placeholder="Enter employee name">
+      <input matInput formControlName="employeeName" placeholder="Enter employee name">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Department Name</mat-label>
-      <input matInput placeholder="Enter department name">
+      <input matInput formControlName="department" placeholder="Enter employee name">
+      <!-- <mat-select formControlName="department" (selectionChange)="onDepartmentChange($event)">
+        <mat-option *ngFor="let department of departments" [value]="department">
+          {{ department }}
+        </mat-option>
+      </mat-select> -->
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Sub-Department Name</mat-label>
-      <input matInput placeholder="Enter sub-department name">
+      <input matInput formControlName="subDepartment" placeholder="Enter employee name">
+      <!-- <mat-select formControlName="subDepartment">
+        <mat-option *ngFor="let subDepartment of subDepartments" [value]="subDepartment">
+          {{ subDepartment }}
+        </mat-option>
+      </mat-select> -->
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Job Grade</mat-label>
+      <input matInput formControlName="jobGrade" placeholder="Enter employee name">
+      <!-- <mat-select formControlName="jobGrade">
+        <mat-option *ngFor="let grade of jobGrades" [value]="grade">
+          {{ grade }}
+        </mat-option>
+      </mat-select> -->
     </mat-form-field>
     <div class="button-group">
       <button mat-raised-button color="primary">Add</button>
@@ -20,3 +39,4 @@
     </div>
   </form>
 </div>
+<p> form works</p>
