@@ -11,6 +11,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { ViewBuildingComponent } from './app/view-building/view-building.component';
 import { ReportComponent } from './app/report/report.component';
 
+import { SiteSidebarComponent } from './app/site-sidebar/site-sidebar.component';
 
 
 
@@ -20,24 +21,30 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'building/:siteId', component: BuildingComponent },
-  { path: 'employeeTracker/:site',component: EmployeeTrackerComponent},
+  {
+    path: 'building', component: SiteSidebarComponent,
+    children: [
+      { path: ':siteId', component: ViewBuildingComponent },
+      // { path: 'reports/:siteId', component: ReportsComponent },
+      { path: 'employeeTracker/:siteId', component: EmployeeTrackerComponent },
+      // { path: 'team-tracker/:siteId', component: TeamTrackerComponent }
+    ]
+  },
+  { path: 'employeeTracker/:site', component: EmployeeTrackerComponent },
   { path: 'floor/:building', component: FloorComponent },
   { path: 'floor-map/:floor', component: FloorMapComponent },
-//   { path: 'view23',component: BuildingComponent,
-//     children:[{
-//       path:"view-building/:siteId",
-//       component:ViewBuildingComponent
-//     } ] 
-// }
-{ path: 'view23', component: BuildingComponent, children: [
-  { path: 'view-building/:siteId', component: ViewBuildingComponent },
-  // { path: 'reports/:siteId', component: ReportsComponent },
-  { path: 'employeeTracker/:siteId', component: EmployeeTrackerComponent },
-  { path: 'view-report', component: ReportComponent },
-  
-  // { path: 'team-tracker/:siteId', component: TeamTrackerComponent }
-]}
+  //   { path: 'view23',component: BuildingComponent,
+  //     children:[{
+  //       path:"view-building/:siteId",
+  //       component:ViewBuildingComponent
+  //     } ] 
+  // }
+  // { path: 'building', component: BuildingComponent, children: [
+  //   { path: 'view-building/:siteId', component: ViewBuildingComponent },
+  //   // { path: 'reports/:siteId', component: ReportsComponent },
+  //   { path: 'employeeTracker/:siteId', component: EmployeeTrackerComponent },
+  //   // { path: 'team-tracker/:siteId', component: TeamTrackerComponent }
+  // ]}
 ];
 
 bootstrapApplication(AppComponent, {

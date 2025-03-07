@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth.service';
+import { environment } from '../../environments/env'; 
 
 interface Site {
   siteId: number;
@@ -25,6 +27,7 @@ interface Site {
 export class HomeComponent implements OnInit {
 
   offices !: Site[];
+  authService = inject(AuthService);
   
 
   // offices = [
@@ -55,7 +58,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get(`http://localhost:8080/api/sites/siteName`).subscribe((data: any) => {
+    this.http.get(`${environment.apiUrl}/api/sites/siteName`).subscribe((data: any) => {
       this.offices = data;
       this.filteredOffices = [...this.offices];
       console.log('Sites:', this.offices);
@@ -64,6 +67,8 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToBuilding(siteId: number): void {
+    console.log('SiteId from home '+ siteId);
+    this.authService.setCurrentSiteId(siteId);
     this.router.navigate(['/building', siteId]);
   }
 

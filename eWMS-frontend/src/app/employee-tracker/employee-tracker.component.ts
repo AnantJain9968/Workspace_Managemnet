@@ -1,24 +1,59 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/env'; 
+import { CommonModule } from '@angular/common';
 
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 @Component({
   selector: 'app-employee-tracker',
-  imports: [ReactiveFormsModule],
+  standalone: true,
+  imports: [ReactiveFormsModule,MatFormFieldModule,MatInputModule,MatButtonModule,MatOptionModule,CommonModule,MatSelectModule],
   templateUrl: './employee-tracker.component.html',
   styleUrl: './employee-tracker.component.css'
 })
+
 export class EmployeeTrackerComponent implements OnInit {
 
   employeeForm!: FormGroup;
+  departments: any[] = [];
+  subDepartments: any[] = [];
+  jobGrades: string[] = [];
 
-  constructor(private fb: FormBuilder) { }
+  allSubDepartments = {
+    'HR': ['Recruitment', 'Payroll'],
+    'Engineering': ['Development', 'QA'],
+    'Marketing': ['SEO', 'Content']
+  };
+  constructor(private fb: FormBuilder,private http: HttpClient) { }
 
   ngOnInit(): void {
+
+    this.getDeptJGData();
     this.employeeForm = this.fb.group({
-      employeeName: ['', Validators.required],
-      deptName: ['', Validators.required],
-      subDeptName: ['', Validators.required],
-      operation: ['', Validators.required]
+      employeeName: ['',Validators.required],
+      department: ['',Validators.required],
+      subDepartment: ['',Validators.required],
+      jobGrade: ['',Validators.required]
+    });
+  }
+
+  getDeptJGData(){
+    this.http.get(`${environment.apiUrl}/api/department/getDepartmentAndGrades`).subscribe((data: any) => {
+      // this.offices = data;
+      // this.filteredOffices = [...this.offices];
+      
+      
+      this.jobGrades = data.jobGrades;
+      this.departments = data.departments;
+      console.log('Department data:', this.departments);
     });
   }
 
@@ -28,4 +63,19 @@ export class EmployeeTrackerComponent implements OnInit {
       // Handle form submission logic here
     }
   }
+
+  onDepartmentChange(event: any): void {
+    const selectedDepartment = event.value;
+    console.log(this.departments);
+    const department = this.departments.find(dep => dep.id === selectedDepartment);
+    if (department) {
+      this.subDepartments = department.subDepartments;
+      console.log('Subdepartment value is '+ this.subDepartments);
+    } else {
+      this.subDepartments = [];
+    }
+    // Reset the subDepartment control value
+    this.employeeForm.get('subDepartment')!.setValue('');
+  }
+
 }

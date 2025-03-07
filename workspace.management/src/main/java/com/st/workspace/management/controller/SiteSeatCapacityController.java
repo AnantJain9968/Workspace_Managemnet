@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/site-seat-capacity")
+@CrossOrigin("*")
 public class SiteSeatCapacityController {
     @Autowired
     private SiteSeatCapacityService siteSeatCapacityService;
@@ -27,7 +28,10 @@ public class SiteSeatCapacityController {
 
     @PostMapping("/bulkLoad")
     public ResponseEntity<List<SiteSeatCapacity>> saveAllSiteSeatCapacities(@RequestBody List<SiteSeatCapacity> siteSeatCapacities) {
-        return ResponseEntity.ok(siteSeatCapacityService.saveAllSiteSeatCapacities(siteSeatCapacities));
+    	List<SiteSeatCapacity> seats =siteSeatCapacityService.saveAllSiteSeatCapacities(siteSeatCapacities);
+    	siteSeatCapacityService.populateBuildingData();    	
+    	return ResponseEntity.ok(seats);
+        
     }
     
     @PostMapping("/populate")

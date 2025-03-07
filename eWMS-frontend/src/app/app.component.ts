@@ -4,9 +4,10 @@ import { AuthService } from './auth.service';
 import { HeaderComponent } from "./header/header.component";
 
 
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterModule, HeaderComponent],
+  imports: [RouterOutlet, RouterModule, HeaderComponent,],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
