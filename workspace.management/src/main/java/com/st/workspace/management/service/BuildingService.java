@@ -39,7 +39,9 @@ public class BuildingService {
         return siteRepository.findAllProjectedBy();
     }
     
-    
+    public Optional<Building> getBuildingById(Long buildingId) {
+        return buildingRepository.findById(buildingId);
+    }
 
     public Optional<Site> getSiteById(Long siteId) {
         return siteRepository.findById(siteId);
