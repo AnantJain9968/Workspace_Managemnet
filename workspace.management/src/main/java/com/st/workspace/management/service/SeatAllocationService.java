@@ -142,6 +142,7 @@ public class SeatAllocationService {
 
         return availableSeats.stream()
                 .filter(seat -> allowedCubicalTypes.contains(seat.getCubical().getCubicalType()))
+                .filter(seat -> "Vacant".equals(seat.getSeatStatus()))
                 .findFirst()
                 .orElse(null);
     }

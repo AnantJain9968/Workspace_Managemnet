@@ -1,5 +1,6 @@
 package com.st.workspace.management.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,42 +96,50 @@ public class SiteSeatCapacityService {
             // Initialize seat number counter for the floor
             int seatNumberCounter = floor.getStartingSeatNum();
 
-            // Create cubicals and seats
-            seatNumberCounter = createCubicalsAndSeats(floor, "ENCLOSED", capacity.getEnclosedRoom(), 1, seatNumberCounter);
-            seatNumberCounter = createCubicalsAndSeats(floor, "ONE", capacity.getOpenCubicalOf1Seat(), 1, seatNumberCounter);
-            seatNumberCounter = createCubicalsAndSeats(floor, "TWO", capacity.getOpenCubicalOf2Seats(), 2, seatNumberCounter);
-            seatNumberCounter = createCubicalsAndSeats(floor, "FOUR", capacity.getOpenCubicalOf4Seats(), 4, seatNumberCounter);
+            // Create cubical rows
+            List<CubicalRow> cubicalRows = createCubicalRows(floor);
+
+            // Distribute cubicals and seats across rows
+            seatNumberCounter = distributeCubicalsAndSeats(cubicalRows, "ENCLOSED", capacity.getEnclosedRoom(), 1, seatNumberCounter);
+            seatNumberCounter = distributeCubicalsAndSeats(cubicalRows, "ONE", capacity.getOpenCubicalOf1Seat(), 1, seatNumberCounter);
+            seatNumberCounter = distributeCubicalsAndSeats(cubicalRows, "TWO", (int) Math.ceil((double) capacity.getOpenCubicalOf2Seats() / 2), 2, seatNumberCounter);
+            seatNumberCounter = distributeCubicalsAndSeats(cubicalRows, "FOUR", (int) Math.ceil((double) capacity.getOpenCubicalOf4Seats() / 4), 4, seatNumberCounter);
         }
     }
 
-    private int createCubicalsAndSeats(Floor floor, String cubicalType, Integer seatCount, int seatsPerCubical, int seatNumberCounter) {
-        if (seatCount != null && seatCount > 0) {
-            int cubicalCount = (int) Math.ceil((double) seatCount / seatsPerCubical);
-            for (int i = 0; i < cubicalCount; i++) {
-                CubicalRow cubicalRow = new CubicalRow();
-                cubicalRow.setFloor(floor);
-                cubicalRow = cubicalRowRepository.save(cubicalRow);
+    private List<CubicalRow> createCubicalRows(Floor floor) {
+        List<CubicalRow> cubicalRows = new ArrayList<>();
+        for (int i = 0; i < rowSize; i++) {
+            CubicalRow cubicalRow = new CubicalRow();
+            cubicalRow.setFloor(floor);
+            cubicalRow = cubicalRowRepository.save(cubicalRow);
+            cubicalRows.add(cubicalRow);
+        }
+        return cubicalRows;
+    }
 
-                for (int j = 0; j < rowSize && cubicalCount > 0; j++) {
-                    Cubical cubical = new Cubical();
-                    cubical.setCubicalRow(cubicalRow);
-                    cubical.setCubicalType(cubicalType);
-                    cubical = cubicalRepository.save(cubical);
+    private int distributeCubicalsAndSeats(List<CubicalRow> cubicalRows, String cubicalType, Integer cubicalCount, int seatsPerCubical, int seatNumberCounter) {
+        if (cubicalCount != null && cubicalCount > 0) {
+            int rowIndex = 0;
+            while (cubicalCount > 0) {
+                CubicalRow cubicalRow = cubicalRows.get(rowIndex);
+                Cubical cubical = new Cubical();
+                cubical.setCubicalRow(cubicalRow);
+                cubical.setCubicalType(cubicalType);
+                cubical = cubicalRepository.save(cubical);
 
-                    for (int k = 0; k < seatsPerCubical; k++) {
-                        if (seatCount > 0) {
-                            Seat seat = new Seat();
-                            seat.setCubical(cubical);
-                            seat.setSeatNumber(String.valueOf(seatNumberCounter++));
-                            seat.setSeatAreaType("Unrestricted");
-                            seat.setSeatStatus("Vacant");
-                            seat.setLastUpdated(new Date());
-                            seatRepository.save(seat);
-                            seatCount--;
-                        }
-                    }
-                    cubicalCount--;
+                for (int j = 0; j < seatsPerCubical; j++) {
+                    Seat seat = new Seat();
+                    seat.setCubical(cubical);
+                    seat.setSeatNumber(String.valueOf(seatNumberCounter++));
+                    seat.setSeatAreaType("Unrestricted");
+                    seat.setSeatStatus("Vacant");
+                    seat.setLastUpdated(new Date());
+                    seatRepository.save(seat);
                 }
+
+                cubicalCount--;
+                rowIndex = (rowIndex + 1) % rowSize;
             }
         }
         return seatNumberCounter;

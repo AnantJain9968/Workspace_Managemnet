@@ -23,14 +23,12 @@ public class SeatAllocationController {
     private SeatAllocationService seatAllocationService;
 
     @PostMapping("/allocate")
-    @Transactional
     public ResponseEntity<Void> allocateSeats() {
         seatAllocationService.allocateSeats();
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/allocate-new-department")
-    @Transactional
     public ResponseEntity<Void> allocateNewDepartment(@RequestBody Department department) {
         seatAllocationService.allocateNewDepartment(department);
         return ResponseEntity.ok().build();
