@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/department-seat-requirement")
+@CrossOrigin("*")
 public class DepartmentSeatRequirementController {
     @Autowired
     private DepartmentSeatRequirementService departmentSeatRequirementService;
@@ -27,7 +28,9 @@ public class DepartmentSeatRequirementController {
 
     @PostMapping("/bulkLoad")
     public ResponseEntity<List<DepartmentSeatRequirement>> saveAllDepartmentSeatRequirements(@RequestBody List<DepartmentSeatRequirement> departmentSeatRequirements) {
-        return ResponseEntity.ok(departmentSeatRequirementService.saveAllDepartmentSeatRequirements(departmentSeatRequirements));
+    	List<DepartmentSeatRequirement> d =departmentSeatRequirementService.saveAllDepartmentSeatRequirements(departmentSeatRequirements);
+        departmentSeatRequirementService.populateDepartmentData();
+    	return ResponseEntity.ok(d);
     }
     
     @PostMapping("/populate")
