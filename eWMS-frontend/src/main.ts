@@ -9,6 +9,8 @@ import { EmployeeTrackerComponent } from './app/employee-tracker/employee-tracke
 import { BuildingComponent } from './app/building/building.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ViewBuildingComponent } from './app/view-building/view-building.component';
+import { ReportComponent } from './app/report/report.component';
+
 
 
 
@@ -32,6 +34,8 @@ const routes: Routes = [
   { path: 'view-building/:siteId', component: ViewBuildingComponent },
   // { path: 'reports/:siteId', component: ReportsComponent },
   { path: 'employeeTracker/:siteId', component: EmployeeTrackerComponent },
+  { path: 'view-report', component: ReportComponent },
+  
   // { path: 'team-tracker/:siteId', component: TeamTrackerComponent }
 ]}
 ];
