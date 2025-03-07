@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/job-grade")
+@CrossOrigin("*")
 public class JobGradeController {
     @Autowired
     private JobGradeService jobGradeService;

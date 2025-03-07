@@ -2,14 +2,18 @@ package com.st.workspace.management.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.st.workspace.management.dto.EmployeeAllocationRequest;
 import com.st.workspace.management.entity.Building;
 import com.st.workspace.management.entity.CubicalTypeAssociation;
 import com.st.workspace.management.entity.Department;
+import com.st.workspace.management.entity.Employee;
 import com.st.workspace.management.entity.Floor;
 import com.st.workspace.management.entity.JobGrade;
 import com.st.workspace.management.entity.Seat;
@@ -18,6 +22,7 @@ import com.st.workspace.management.entity.SubDepartment;
 import com.st.workspace.management.repository.BuildingRepository;
 import com.st.workspace.management.repository.CubicalTypeAssociationRepository;
 import com.st.workspace.management.repository.DepartmentRepository;
+import com.st.workspace.management.repository.EmployeeRepository;
 import com.st.workspace.management.repository.FloorRepository;
 import com.st.workspace.management.repository.JobGradeRepository;
 import com.st.workspace.management.repository.SeatAllocationRepository;
@@ -49,6 +54,9 @@ public class SeatAllocationService {
 
     @Autowired
     private CubicalTypeAssociationRepository cubicalTypeAssociationRepository;
+    
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public void allocateSeats() {
         List<Department> departments = departmentRepository.findAll();
@@ -165,5 +173,48 @@ public class SeatAllocationService {
         return department.getSubDepartments().stream()
                 .flatMap(subDepartment -> seatAllocationRepository.findBySubDepartment(subDepartment).stream())
                 .collect(Collectors.toList());
+    }
+    
+    @Transactional
+    public void allocateEmployee(EmployeeAllocationRequest request) {
+        Department department = departmentRepository.findById(request.getDepartmentId()).orElseThrow(() -> new RuntimeException("Department not found"));
+        SubDepartment subDepartment = subDepartmentRepository.findById(request.getSubDepartmentId()).orElseThrow(() -> new RuntimeException("SubDepartment not found"));
+        JobGrade jobGrade = jobGradeRepository.findBySubDepartmentAndGrade(subDepartment, request.getJobGradeName()).orElseThrow(() -> new RuntimeException("JobGrade not found"));
+
+        // Find the reserved seat allocations for the sub-department
+        List<SeatAllocation> seatAllocations = seatAllocationRepository.findBySubDepartmentAndStatus(subDepartment, "Reserved");
+
+        // Find the eligible cubical types for the job grade
+        List<String> eligibleCubicalTypes = cubicalTypeAssociationRepository.findByJobGrade(jobGrade.getGrade())
+                .stream()
+                .map(CubicalTypeAssociation::getCubicalType)
+                .collect(Collectors.toList());
+
+        // Find the first eligible seat allocation
+        Optional<SeatAllocation> optionalSeatAllocation = seatAllocations.stream()
+                .filter(seatAllocation -> eligibleCubicalTypes.contains(seatAllocation.getSeat().getCubical().getCubicalType()))
+                .findFirst();
+
+        SeatAllocation seatAllocation = optionalSeatAllocation.orElseThrow(() -> new RuntimeException("No reserved seat found for the given sub-department and job grade"));
+
+        // Create the employee
+        Employee employee = new Employee();
+        employee.setName(request.getEmployeeName());
+        employee.setDepartment(department);
+        employee.setSubDepartment(subDepartment);
+        employee.setJobGrade(request.getJobGradeName());
+        employee.setSeat(seatAllocation.getSeat());
+        employee = employeeRepository.save(employee);
+
+        // Update the seat allocation
+        seatAllocation.setEmployee(employee);
+        seatAllocation.setStatus("Allocated");
+        seatAllocationRepository.save(seatAllocation);
+
+        // Update the seat status
+        Seat seat = seatAllocation.getSeat();
+        seat.setSeatStatus("In-use");
+        seat.setLastUpdated(new Date());
+        seatRepository.save(seat);
     }
 }
