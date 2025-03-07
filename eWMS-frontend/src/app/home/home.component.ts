@@ -62,6 +62,10 @@ export class HomeComponent implements OnInit {
       this.offices = data;
       this.filteredOffices = [...this.offices];
       console.log('Sites:', this.offices);
+
+      for(let office of this.offices){
+        office.image=''
+      }
     });
     
   }
