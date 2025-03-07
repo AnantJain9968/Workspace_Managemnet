@@ -8,6 +8,8 @@ import { FloorMapComponent } from './app/floor-map/floor-map.component';
 import { EmployeeTrackerComponent } from './app/employee-tracker/employee-tracker.component';
 import { BuildingComponent } from './app/building/building.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ViewBuildingComponent } from './app/view-building/view-building.component';
+
 
 
 
@@ -19,7 +21,19 @@ const routes: Routes = [
   { path: 'building/:siteId', component: BuildingComponent },
   { path: 'employeeTracker/:site',component: EmployeeTrackerComponent},
   { path: 'floor/:building', component: FloorComponent },
-  { path: 'floor-map/:floor', component: FloorMapComponent }
+  { path: 'floor-map/:floor', component: FloorMapComponent },
+//   { path: 'view23',component: BuildingComponent,
+//     children:[{
+//       path:"view-building/:siteId",
+//       component:ViewBuildingComponent
+//     } ] 
+// }
+{ path: 'view23', component: BuildingComponent, children: [
+  { path: 'view-building/:siteId', component: ViewBuildingComponent },
+  // { path: 'reports/:siteId', component: ReportsComponent },
+  { path: 'employeeTracker/:siteId', component: EmployeeTrackerComponent },
+  // { path: 'team-tracker/:siteId', component: TeamTrackerComponent }
+]}
 ];
 
 bootstrapApplication(AppComponent, {

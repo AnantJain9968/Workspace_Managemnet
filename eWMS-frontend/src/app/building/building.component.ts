@@ -27,7 +27,10 @@ export class BuildingComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.siteId = this.route.snapshot.paramMap.get('siteId');
+    
+      this.siteId = this.route.snapshot.paramMap.get('siteId');
+    
+    // this.siteId = this.route.snapshot.paramMap.get('siteId');
     console.log(this.siteId);
 
     this.http.get(`http://localhost:8080/api/sites/${this.siteId}`).subscribe((data: any) => {
